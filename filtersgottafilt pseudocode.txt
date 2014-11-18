@@ -1,0 +1,295 @@
+Adam Gleichsner (amg188)
+eecs293
+Programming Assignment 11
+
+
+We start by defining the relationships between the parent class, Filter, and all varying types of filters
+
+Filter is root
+  IdentityFilter is a Filter
+  ScalarFilter is a Filter    
+    MaxFilter is a ScalarFilter
+      MaxFilterN is a MaxFilter
+    MinFilter is a ScalarFilter
+      MinFilterN is a MinFilter
+    ScalarLinearFilter is a Filter
+      FIRFilter is a ScalarLinearFilter
+        GainFilter is a FIRFilter
+        BinomialFilter is a FIRFilter
+    AveragingFilter is a ScalarFilter
+    AveragingFilterN is a AveragingFilter
+      
+  FilterCascade is a Filter, has many Filters
+
+Of course, all of this would be moot without explaination and a bit of definition, so let's get to it:
+
+**Filter**
+Filter is the base class which we'll implement as an interface. We do this so we can define additional interfaces
+later on, and so we can also implement the generic type, input/output stubs for all more specific filters, and the 
+reset option.
+
+public interface Filter <Generic Type T>
+  public T output;
+  
+  method T getOutput()
+
+  method void addInput (T input)
+
+  method void reset(T reset)
+
+end
+
+**IdentityFilter**
+The IdentityFilter simply sets the output to the input. Because of how lenient it is with regards to type,
+we define it directly as a filter outside of the scalar family.
+
+public class IdentityFilter <T> implements Filter <T>
+  
+  public IdentityFilter()
+    output := 0
+
+  public void addInput (T input)
+    output := input
+
+  public void reset(T reset)
+    output := reset
+
+end
+
+**ScalarFilter**
+Typically, a scalar filter operates with doubles as values, but here we will continue to define the filter
+with generics. We extend the Filter interface to setup for the multiple types of scalar functions but only
+define scalar filters as an additional interface since just a "scalar filter" (i.e. not a max, min, or average)
+doesn't have an equation associated to the output.
+
+public interface ScalarFilter extends Filter <Double> 
+  
+  public List<Double> values;
+
+end
+
+**MaxFilter**
+Extending scalar filter, we want the output to be the greatest value within ScalarFilter's values.
+
+public class MaxFilter<T> extends ScalarFilter<T>
+
+  public MaxFilter()
+    values := new List<T> with max size restraint (i.e. 1)
+    output := 0
+
+  public void addInput (T input)
+    if input < last output, drop
+    else push input to values, pop old value
+    output := largest value in values
+
+  public T getOutput () 
+    return output if > 0 values else throw UninitializedObjectException
+
+  public void reset (T reset)
+    values := new List<T> {reset}
+    output := reset
+
+end
+
+**MaxFilterN**
+Extends MaxFilter, but now we hold more than one value in our 
+
+public class MaxFilterN<T> extends ScalarFilter<T>
+  int N
+
+  public MaxFilterN(int N)
+    N := N
+    values := new List<T> of size N
+    output := 0
+
+  public void addInput (T input)
+    values := addNewValue(T input)
+    output := largest value in values
+
+  public T getOutput () 
+    return output if > 0 values else throw UninitializedObjectException
+
+  public void reset (T reset)
+    values := new List<T> {reset} of size N
+    output := reset
+
+  private List<T> addNewValue (T input)
+    if size of values < N
+      add input to values
+    else
+      add input to values, pop last element
+
+end 
+
+**MinFilter**
+Almost identical to MaxFilter, except that we want to find and keep the min value from values now.
+
+**MinFilterN**
+Same as MaxFilterN, but we still just want the smallest value within our limited list
+
+**AveragingFilter**
+Similar to Max/Min, with a little more math
+
+public class AveragingFilter<T> extends ScalarFilter<T>
+  T pastAvg
+  int totalObjects
+
+  public AveragingFilter()
+    values := new List<T> of max size 1
+    output := 0
+
+  public void addInput (T input)
+    increment totalObjects
+    add input to values, pop old value and add to pastAvg
+    output += (-sum of values + pastAvg) / size of values
+
+  public T getOutput () 
+    return output if > 0 values else throw UninitializedObjectException
+
+  public void reset (T reset)
+    values := new List<T> {reset}
+    totalObject := 1
+    output := reset
+
+end
+
+**AveragingFilterN**
+Same as MaxFilterN, just with returning the average instead
+
+**FilterCascade**
+This one is tricky. Although it's a filter by standards, it contains a multitude of internal filters.
+The other caveat is that it can't be reset, so we have to put in an alternative means for resetting a
+filter (either by index or by allowing access to the independent filters)
+
+public class FilterCascade<T> implements Filter<T>
+
+  List<Filter<T>> filters
+  T value
+
+  public FilterCascade<T>
+    filters := new List<Filter<T>>
+    value := 0
+    output := 0
+
+  public void addInput (T input)
+    if no filters, throw exception
+    else value := input
+    output := calculateOutput
+
+  public T getOutput () 
+    return output if > 0 values else throw UninitializedObjectException
+
+  private void reset (T reset)
+    throw exception, should be unaccessible due to private declaration
+
+  public Filter getFilters ()
+    return filters
+
+  public void addFilter (Filter filter)
+    add filter to filters
+
+  private calculateOutput
+    if filters is empty throw exception
+
+    current input := input
+    for each filter in filters
+      move current input into filter
+      current input := filter output
+    end loop
+    output := last filter output
+
+end
+
+**ScalarLinearFilter**
+Starting a new family of filters, the scalar linear filter operates via all past outputs and inputs
+multiplied by a bunch of constants. We directly link this to the filter class and define our consistent
+variables for ins, outs, conts and limits.
+
+public class ScalarLinearFilter<T> implements ScalarFilter
+
+  List<T> inputs
+  List<T> outputs
+  List<T> aValues
+  List<T> bValues
+  int N, M
+
+  public ScalarLinearFilter<T> (List<T> aValues, bValues, int N, M)
+    aValues := aValues
+    bValues := bValues
+    N := N
+    M := M
+    inputs := new List<T> of M 0s
+    outputs := new List<T> of N 0s
+
+  public void addInput(T input)
+    push input to inputs
+    output := calculateOutput
+    push output to outputs
+
+  public T getOutput() 
+    return output
+
+  public void reset(T reset)
+    overwrite all inputs with reset (for loop)
+    output = reset * (sum of bValues/(1 + sum of aValues))
+    overwrite all outputs with output (for loop)
+
+  private T calculateOutput()
+    T inputSum = 0
+    T outputSum = 0
+    
+    for each value in bValues
+      outputSum += bValue * corresponding input
+    end loop
+
+    for each value in aValues (from 1 to M)
+      inputSum += aValue * corresponding output
+    end loop
+
+    result = outputSum - inputSum
+
+    return result
+
+end
+
+**FIRFilter**
+A FIR filter acts exactly the same as a scalar linear filter, except that all aValues are 0. So,
+making things simple, we can initialize the super class with this new requirement when initializing 
+this extended class.
+
+public class FIRFilter extends ScalarLinearFilter
+
+  public FIRFilter (List<T> bValues, int M)
+    this := new ScalarLinearFilter (list of 0s for aValues, bValues, 0, M)
+
+end
+
+**GainFilter**
+A GainFilter is a FIRFilter with some further specifications: all bValues except the first are also 0,
+and the first bValue is referred to the gain
+
+public class GainFilter extends FIRFilter
+
+  public GainFilter (T gain, int M)
+    this := new FIRFilter (list of gain and M - 1 0s, M)
+
+end
+
+**BinomialFilter**
+This last filter is again a FIRFilter, but this time the bValues are combinations of the total size of
+the list and their position in said list.
+
+public class BinomialFilter extends FIRFilter
+  
+  public BinomialFilter (int M)
+    List<Double> binomials
+    for i = 0 to M
+      add M choose i (i.e. M!/(i!*(M-i)!)) to binomials
+    end loop
+    this := new FIRFilter (binomials, N)
+
+end
+
+
+Error handling will be in place to throw and catch instances of illegal filters, such as bad size of inputs, uninitialized internal filters,
+bad inputs in general, and filters that haven't been fully activated yet.
