@@ -10,10 +10,7 @@ import java.io.InvalidObjectException;
  * scalar family.
  * @param <T>
  */
-public class IdentityFilter<T> implements Filter<T> {
-
-	//Holds the output for calling
-	private T output;
+public class IdentityFilter<T> extends Filter<T> {
 	
 	/**
 	 * Constructor to initialize the filter
@@ -56,29 +53,4 @@ public class IdentityFilter<T> implements Filter<T> {
 		this.throwIfNullInput(reset);
 		output = reset;	
 	}
-
-	/**
-  	 * Method to call whenever giving the output in case something
-  	 * is terribly wrong
-  	 * @throws InvalidObjectException
-  	 */
-	@Override
-	public void throwIfInvalidOutput() throws InvalidObjectException {
-		if (output == null)
-			throw new InvalidObjectException("Output is invalid");
-	}
-
-	/**
-	 * Method called to make sure input is not null
-	 * @param objects - collection of objects to check
-	 * @throws InvalidObjectException
-	 */
-	@Override
-	public void throwIfNullInput(Object...objects) throws InvalidObjectException {
-		for (Object object:objects) {
-			if (object == null)
-				throw new InvalidObjectException("Input is invalid");
-		}
-	}
-
 }
