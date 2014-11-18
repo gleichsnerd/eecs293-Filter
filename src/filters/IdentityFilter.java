@@ -20,17 +20,6 @@ public class IdentityFilter<T> extends Filter<T> {
 	}
 
 	/**
-	 * Gets the output of the filter at the point of calling
-	 * @return T - output of the filter
-	 * @throws InvalidObjectException 
-	 */
-	@Override
-	public T getOutput() throws InvalidObjectException {		
-		this.throwIfInvalidOutput();
-		return output;
-	}
-
-	/**
   	 * Inputs the new value and triggers the calculation of the
   	 * output
   	 * @param input

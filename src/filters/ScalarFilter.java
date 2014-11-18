@@ -19,4 +19,38 @@ public abstract class ScalarFilter extends Filter<Double> {
 	 */
 	protected abstract Double calculateOutput(Double input) throws InvalidObjectException;
 	
+	/**
+	 * Returns output is valid, throws if null
+	 * @return Double - output
+	 * @throws InvalidObjectException
+	 */
+	@Override
+	public Double getOutput() throws InvalidObjectException {
+		this.throwIfInvalidOutput();
+		return output;
+	}
+	
+	/**
+	 * Grabs input and processes to set or keep output as the
+	 * max value
+	 * @param input
+	 * @throws InvalidObjectException
+	 */
+	@Override
+	public void addInput(Double input) throws InvalidObjectException {
+		this.throwIfNullInput(input);
+		output = calculateOutput(input);
+	}
+	
+	/**
+	 * Resets output to the given reset value
+	 * @param reset
+	 * @throws InvalidObjectException
+	 */
+	@Override
+	public void reset(Double reset) throws InvalidObjectException {
+		this.throwIfNullInput(reset);
+		output = reset;
+	}
+	
 }

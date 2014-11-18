@@ -23,7 +23,10 @@ public abstract class Filter<T> {
 	 * @return T - output of the filter
 	 * @throws InvalidObjectException 
 	 */
-  	public abstract T getOutput() throws InvalidObjectException;
+  	public T getOutput() throws InvalidObjectException {
+  		this.throwIfInvalidOutput();
+		return output;
+  	}
 
   	/**
   	 * Inputs the new value and triggers the calculation of the

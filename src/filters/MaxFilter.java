@@ -18,40 +18,6 @@ public class MaxFilter extends ScalarFilter {
 	}
 
 	/**
-	 * Returns output is valid, throws if null
-	 * @return Double - output
-	 * @throws InvalidObjectException
-	 */
-	@Override
-	public Double getOutput() throws InvalidObjectException {
-		this.throwIfInvalidOutput();
-		return output;
-	}
-
-	/**
-	 * Grabs input and processes to set or keep output as the
-	 * max value
-	 * @param input
-	 * @throws InvalidObjectException
-	 */
-	@Override
-	public void addInput(Double input) throws InvalidObjectException {
-		this.throwIfNullInput(input);
-		output = calculateOutput(input);
-	}
-
-	/**
-	 * Resets output to the given reset value
-	 * @param reset
-	 * @throws InvalidObjectException
-	 */
-	@Override
-	public void reset(Double reset) throws InvalidObjectException {
-		this.throwIfNullInput(reset);
-		output = reset;
-	}
-
-	/**
 	 * Determines if we need to switch our old output with a new value
 	 * @param input
 	 * @throws InvalidObjectException

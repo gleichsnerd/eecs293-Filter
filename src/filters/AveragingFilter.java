@@ -24,28 +24,6 @@ public class AveragingFilter extends ScalarFilter {
 	}
 
 	/**
-	 * Returns output is valid, throws if null
-	 * @return Double - output
-	 * @throws InvalidObjectException
-	 */
-	@Override
-	public Double getOutput() throws InvalidObjectException {
-		this.throwIfInvalidOutput();
-		return output;
-	}
-
-	/**
-	 * Grabs input and sends it to get the average
-	 * @param input
-	 * @throws InvalidObjectException
-	 */
-	@Override
-	public void addInput(Double input) throws InvalidObjectException {
-		this.throwIfNullInput(input);
-		output = calculateOutput(input);
-	}
-
-	/**
 	 * Resets output to the given reset value
 	 * @param reset
 	 * @throws InvalidObjectException
