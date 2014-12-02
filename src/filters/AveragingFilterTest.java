@@ -32,7 +32,7 @@ public class AveragingFilterTest {
 		
 		input = (double)2;
 		filter.addInput(input);
-		assertEquals("New average should be 1 again", new Double(1), filter.getOutput());
+		assertEquals("New average should be 1 again", 1d, filter.getOutput());
 	}
 	
 	@Test

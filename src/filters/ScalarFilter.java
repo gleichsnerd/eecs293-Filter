@@ -20,7 +20,7 @@ public abstract class ScalarFilter extends Filter<Double> {
 	protected abstract Double calculateOutput(Double input) throws InvalidObjectException;
 	
 	/**
-	 * Returns output is valid, throws if null
+	 * {@inheritDoc}
 	 * @return Double - output
 	 * @throws InvalidObjectException
 	 */
@@ -31,8 +31,7 @@ public abstract class ScalarFilter extends Filter<Double> {
 	}
 	
 	/**
-	 * Grabs input and processes to set or keep output as the
-	 * max value
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */

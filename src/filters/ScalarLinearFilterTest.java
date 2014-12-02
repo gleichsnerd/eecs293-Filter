@@ -16,9 +16,9 @@ public class ScalarLinearFilterTest {
 		ArrayList<Double> aValues = new ArrayList<Double>();
 		ArrayList<Double> bValues = new ArrayList<Double>();
 		
-		aValues.add(new Double(.1));
-		bValues.add(new Double(.5));
-		bValues.add(new Double(.5));
+		aValues.add(.1d);
+		bValues.add(.5d);
+		bValues.add(.5d);
 		
 		ScalarLinearFilter filter = new ScalarLinearFilter(aValues, bValues, M, N);
 		
@@ -35,36 +35,36 @@ public class ScalarLinearFilterTest {
 		ArrayList<Double> aValues = new ArrayList<Double>();
 		ArrayList<Double> bValues = new ArrayList<Double>();
 		
-		aValues.add(new Double(.1));
-		bValues.add(new Double(.5));
-		bValues.add(new Double(.5));
+		aValues.add(.1d);
+		bValues.add(.5d);
+		bValues.add(.5d);
 		
 		ScalarLinearFilter filter = new ScalarLinearFilter(aValues, bValues, M, N);
 		
-		filter.addInput(new Double(-1));
+		filter.addInput(-1d);
 		assertEquals("Should output -.5", new Double(-.5), filter.getOutput());
 		
-		filter.addInput(new Double(1));
+		filter.addInput(1d);
 		assertEquals("Should output .05", new Double(.05), filter.getOutput());
 		
-		filter.addInput(new Double(2));
+		filter.addInput(2d);
 		assertEquals("Should output 1.495", new Double(1.495), filter.getOutput());
 		
 		filter.reset(new Double (0));
 		
-		filter.addInput(new Double(-1));
+		filter.addInput(-1d);
 		assertEquals("Should output -.5", new Double(-.5), filter.getOutput());
 		
-		filter.addInput(new Double(3));
+		filter.addInput(3d);
 		assertEquals("Should output 1.05", new Double(1.05), filter.getOutput());
 		
-		filter.addInput(new Double(1));
+		filter.addInput(1d);
 		assertEquals("Should output 1.895", new Double(1.895), filter.getOutput());
 		
-		filter.addInput(new Double(2));
+		filter.addInput(2d);
 		assertEquals("Should output 1.3105", new Double(1.3105), filter.getOutput());
 		
-		filter.addInput(new Double(1));
+		filter.addInput(1d);
 		assertEquals("Should output 1.36895", new Double(1.36895), filter.getOutput());
 	}
 

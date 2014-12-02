@@ -18,7 +18,7 @@ public class MaxFilter extends ScalarFilter {
 	}
 
 	/**
-	 * Determines if we need to switch our old output with a new value
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */

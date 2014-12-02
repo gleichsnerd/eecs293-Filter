@@ -24,7 +24,7 @@ public class AveragingFilter extends ScalarFilter {
 	}
 
 	/**
-	 * Resets output to the given reset value
+	 * {@inheritDoc}
 	 * @param reset
 	 * @throws InvalidObjectException
 	 */
@@ -37,17 +37,16 @@ public class AveragingFilter extends ScalarFilter {
 	}
 	
 	/**
-	 * Override the invalid output throwing method to account for
-	 * no items or a null average
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void throwIfInvalidOutput() throws InvalidObjectException {
+	protected void throwIfInvalidOutput() throws InvalidObjectException {
 		if (output == null || items == 0 || average == null)
 			throw new InvalidObjectException("Output is invalid");
 	}
 
 	/**
-	 * Determines if we need to switch our old output with a new value
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */

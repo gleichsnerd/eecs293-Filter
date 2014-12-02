@@ -20,31 +20,31 @@ public class AveragingFilterNTest {
 	
 	@Test
 	public void testInputOutput() throws InvalidObjectException {
-		Double input = (double) 2;
+		Double input = 2d;
 		AveragingFilter filter = new AveragingFilterN(2);
 		
 		filter.addInput(input);
 		assertEquals("Only value should be output", input, filter.getOutput());
 		
-		input = (double) 3;
+		input = 3d;
 		filter.addInput(input);
 		assertEquals("Average should now be 2.5", new Double(2.5), filter.getOutput());
 		
-		input = (double) 1;
+		input = 1d;
 		filter.addInput(input);
-		assertNotEquals("Average should now be 2", new Double(2), filter.getOutput());
+		assertNotEquals("Average should now be 2", 2d, filter.getOutput());
 		
-		input = (double) 2;
+		input = 2d;
 		filter.addInput(input);
 		assertEquals("Average should now be 1.5", new Double(1.5), filter.getOutput());
 	}
 
 	@Test
 	public void testReset() throws InvalidObjectException {
-		Double reset = (double) 0;
+		Double reset = 0d;
 		AveragingFilterN filter = new AveragingFilterN(2);
 		
-		filter.addInput((double) 27);
+		filter.addInput(27d);
 		filter.reset(reset);
 		
 		assertEquals("Output should be the reset value", reset, filter.getOutput());

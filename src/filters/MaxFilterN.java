@@ -25,8 +25,7 @@ public class MaxFilterN extends MaxFilter {
 	}
 	
 	/**
-	 * Override calculateOutput to handle a list with a max allowed
-	 * values.
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */
@@ -47,7 +46,7 @@ public class MaxFilterN extends MaxFilter {
 	}
 	
 	/**
-	 * Overrides reset to clear the list and start over with the reset value
+	 * {@inheritDoc}
 	 * @param reset
 	 * @throws InvalidObjectException
 	 */

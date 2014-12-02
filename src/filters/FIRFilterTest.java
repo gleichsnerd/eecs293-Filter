@@ -44,9 +44,9 @@ public class FIRFilterTest {
 		filter.addInput(new Double(-3));
 		assertEquals("Output should be -2", new Double(-2), filter.getOutput());
 		
-		filter.reset(new Double(0));
+		filter.reset(0d);
 		
-		filter.addInput(new Double(4));
+		filter.addInput(4d);
 		assertEquals("Output should be 2", new Double(2), filter.getOutput());
 	}
 

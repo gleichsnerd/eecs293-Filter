@@ -29,7 +29,7 @@ public class BinomialFilter extends FIRFilter {
 	private static ArrayList<Double> getBinomials(int N) {
 		ArrayList<Double> returnList = new ArrayList<Double>();
 		for(int i = 0; i <= N; i++) {
-			returnList.add(C(N, i));
+			returnList.add(combination(N, i));
 		}
 		
 		return returnList;
@@ -41,7 +41,7 @@ public class BinomialFilter extends FIRFilter {
 	 * @param k - chosen from
 	 * @return Double - Combination
 	 */
-	private static Double C(int n, int k) {
+	private static Double combination(int n, int k) {
 	    return factorial(n) / (factorial(k) * factorial(n - k));
 	}
 
@@ -51,7 +51,7 @@ public class BinomialFilter extends FIRFilter {
 	 * @return Double - Permutation
 	 */
 	private static Double factorial(int i) {
-	    Double factorial = new Double(1);
+	    Double factorial = 1d;
 		for (int count = i; i > 0; i--) {
 	    	factorial = factorial * count;
 	    }

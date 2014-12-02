@@ -21,7 +21,7 @@ public class FilterCascade<T> extends Filter<T> {
 	}
 	
 	/**
-	 * Takes an input and begins the cascade across all filters
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */
@@ -32,7 +32,7 @@ public class FilterCascade<T> extends Filter<T> {
 	}
 
 	/**
-	 * Throws exception when called since we cannot reset the cascade
+	 * {@inheritDoc}
 	 * @param reset
 	 * @throws InvalidObjectException
 	 */
@@ -42,11 +42,11 @@ public class FilterCascade<T> extends Filter<T> {
 	}
 	
 	/**
-	 * Override to account for null filters or no filters
+	 * {@inheritDoc}
 	 * @throws InvalidObjectException
 	 */
 	@Override
-	public void throwIfInvalidOutput() throws InvalidObjectException {
+	protected void throwIfInvalidOutput() throws InvalidObjectException {
 		if (output == null || filters == null || filters.isEmpty())
 			throw new InvalidObjectException("Output is invalid");
 	}

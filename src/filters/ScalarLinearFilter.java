@@ -39,18 +39,18 @@ public class ScalarLinearFilter extends ScalarFilter {
 		
 		//M - 1 since we count from 1 to M
 		if (M > 0)
-			this.inputs = this.createListOfRepeatedValues(M - 1, new Double(0));
+			this.inputs = this.createListOfRepeatedValues(M - 1, 0d);
 		else
 			this.inputs = new ArrayList<Double>();
 		
 		if (N > 0)
-			this.outputs = this.createListOfRepeatedValues(N, new Double(0));
+			this.outputs = this.createListOfRepeatedValues(N, 0d);
 		else
 			this.outputs = new ArrayList<Double>();
 	}
 
 	/**
-	 * Adds input to the list, grabs output, then adds output to the list
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */
@@ -76,7 +76,7 @@ public class ScalarLinearFilter extends ScalarFilter {
 	}
 	
 	/**
-	 * Calculates outputs times B minus inputs times A
+	 * {@inheritDoc}
 	 * @param input
 	 * @return Double - output of the filter
 	 * @throws InvalidObjectException
@@ -90,7 +90,7 @@ public class ScalarLinearFilter extends ScalarFilter {
 	}
 	
 	/**
-	 * Resets the filter by overwriting all values to neutral reset values
+	 * {@inheritDoc}
 	 * @param reset
 	 * @throws InvalidObjectException
 	 */
@@ -110,7 +110,7 @@ public class ScalarLinearFilter extends ScalarFilter {
 	 */
 	protected Double calculatelistSum (List<Double> list) throws InvalidObjectException {
 		this.throwIfNullInput(list);
-		Double sum = new Double(0);
+		Double sum = 0d;
 		//For each input, add it to the sum
 		for (int count = 0; count < inputs.size(); count ++) {
 			sum += inputs.get(count);
@@ -129,7 +129,7 @@ public class ScalarLinearFilter extends ScalarFilter {
 	 */
 	protected Double calculateListMultipliedSum (List<Double> in, List<Double> mult) throws InvalidObjectException {
 		this.throwIfNullInput(in);
-		Double msum = new Double(0);
+		Double msum = 0d;
 		//For each item in the list
 		for(int count = 0; count < in.size() && count < mult.size(); count++) {
 			msum += in.get(count) * mult.get(count);

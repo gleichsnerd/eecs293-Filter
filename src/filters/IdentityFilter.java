@@ -20,8 +20,7 @@ public class IdentityFilter<T> extends Filter<T> {
 	}
 
 	/**
-  	 * Inputs the new value and triggers the calculation of the
-  	 * output
+  	 * {@inheritDoc}
   	 * @param input
 	 * @throws InvalidObjectException 
   	 */
@@ -32,8 +31,7 @@ public class IdentityFilter<T> extends Filter<T> {
 	}
 
 	/**
-  	 * Resets the filter to a given value, erasing all previous
-  	 * and unnecessary data
+  	 * {@inheritDoc}
   	 * @param reset
 	 * @throws InvalidObjectException 
   	 */

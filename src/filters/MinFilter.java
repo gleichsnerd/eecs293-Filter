@@ -17,7 +17,7 @@ public class MinFilter extends ScalarFilter {
 	}
 
 	/**
-	 * Resets output to the given reset value
+	 * {@inheritDoc}
 	 * @param reset
 	 * @throws InvalidObjectException
 	 */
@@ -28,7 +28,7 @@ public class MinFilter extends ScalarFilter {
 	}
 
 	/**
-	 * Determines if we need to switch our old output with a new value
+	 * {@inheritDoc}
 	 * @param input
 	 * @throws InvalidObjectException
 	 */

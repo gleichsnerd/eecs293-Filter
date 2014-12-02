@@ -32,9 +32,9 @@ public class BinomialFilterTest {
 		filter.addInput(new Double(-3));
 		assertEquals("Output should be -9.75", new Double(-9.75), filter.getOutput());
 		
-		filter.reset(new Double(0));
+		filter.reset(0d);
 		
-		filter.addInput(new Double(4));
+		filter.addInput(4d);
 		assertEquals("Output should be 4", new Double(4), filter.getOutput());
 	}
 
