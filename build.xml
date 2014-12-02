@@ -9,6 +9,7 @@
 	<property name="source" value="1.6"/>
 	<property name="src" location="./src"/>
 	<property name="bin" location="./bin"/>
+	<property name="doc.dir" location="doc"/>
 
 	
 	<path id="JUnit4.libraryclasspath"> <!-- Path information for JUnit jars -->
@@ -45,6 +46,10 @@
             <classpath refid="filters.classpath"/> 
         </javac>
     </target>
+	
+	<target name="doc" depends="build" description="generate documentation">
+	    <javadoc sourcepath="${source.dir}" destdir="${doc.dir}"/>
+	</target>
 
 	<target name="test" depends="build"> <!-- Builds the code via the depends feature, and then runs tests -->
         <mkdir dir="${junit.output.dir}"/>
